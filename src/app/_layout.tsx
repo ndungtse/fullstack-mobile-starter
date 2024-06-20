@@ -4,11 +4,18 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import "./style.css";
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { NativeWindStyleSheet } from 'nativewind';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+NativeWindStyleSheet.setOutput({
+  default: "native",
+});
+
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
