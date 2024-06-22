@@ -7,16 +7,16 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 const IndexPage = () => {
     const router = useRouter()
-    
+
     return (
         <SafeAreaView className=' flex-1' edges={[]} >
             {/* <CustomStatusBar style="light" backgroundColor={Colors.primary} /> */}
             <View className='flex-1 items-center justify-center bg-primary'>
                 <View className='flex flex-row items-center justify-center'>
-                    <Text className=' text-4xl font-bold'>Supa</Text>
-                    <Text className=' text-4xl text-white font-bold'>Menu</Text>
+                    <Text className=' text-4xl font-bold'>Mob</Text>
+                    <Text className=' text-4xl text-white font-bold'>Starter</Text>
                 </View>
-                <Text className='text-white text-xl'>Welcome to SupaMenu</Text>
+                <Text className='text-white text-xl'>Welcome to MobStarter</Text>
                 <Pressable
                     onPress={() => router.push('/login')}
                     className='bg-white w-fit flex-row gap-x-2 items-center justify-center absolute bottom-11 text-primary p-3 px-8 pb-3.5 rounded-[120px] mt-3'>
