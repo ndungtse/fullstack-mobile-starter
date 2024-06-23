@@ -1,31 +1,55 @@
-import { Colors } from '@/utils/constants/Colors'
-import { AntDesign } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
-import React from 'react'
-import { Pressable, Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import ImageCarousel from "@/components/shared/ImageCarousel";
+import { Colors } from "@/utils/constants/Colors";
+import { AntDesign } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React from "react";
+import { Image, Pressable, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const IndexPage = () => {
-    const router = useRouter()
+  const router = useRouter();
 
-    return (
-        <SafeAreaView className=' flex-1' edges={[]} >
-            {/* <CustomStatusBar style="light" backgroundColor={Colors.primary} /> */}
-            <View className='flex-1 items-center justify-center bg-primary'>
-                <View className='flex flex-row items-center justify-center'>
-                    <Text className=' text-4xl font-bold'>Mob</Text>
-                    <Text className=' text-4xl text-white font-bold'>Starter</Text>
-                </View>
-                <Text className='text-white text-xl'>Welcome to MobStarter</Text>
-                <Pressable
-                    onPress={() => router.push('/login')}
-                    className='bg-white w-fit flex-row gap-x-2 items-center justify-center absolute bottom-11 text-primary p-3 px-8 pb-3.5 rounded-[120px] mt-3'>
-                    <Text className='text-primary text-lg font-bold'>Get Started</Text>
-                    <AntDesign name="arrowright" size={24} color={Colors.primary} />
-                </Pressable>
-            </View>
-        </SafeAreaView>
-    )
-}
+  const imageUrls = [
+    "@/assets/images/gifs/upgrade.gif",
+    "@/assets/images/gifs/announce.gif",
+  ];
 
-export default IndexPage
+  return (
+    <SafeAreaView className=" flex-1" edges={[]}>
+      {/* <CustomStatusBar style="light" backgroundColor={Colors.primary} /> */}
+      <View className="flex-1 items-center justify-center bg-white">
+        <View className="px-5 flex-col">
+          {/* <Image
+            className=" bg-primary overflow-hidden"
+            // width={100}
+            source={require("@/assets/images/gifs/upgrade.gif")}
+          /> */}
+          <ImageCarousel
+            images={imageUrls}
+            renderItem={({ index }) => (
+              <Image
+                resizeMode="cover"
+                className="object-cover w-full h-full"
+                source={require("@/assets/images/gifs/upgrade.gif")}
+              />
+            )}
+          />
+        </View>
+        <View className="flex flex-row items-center justify-center">
+          <Text className=" text-4xl font-bold">Mob</Text>
+          <Text className=" text-4xl text-primary font-bold">Starter</Text>
+        </View>
+        <Text className="text-primary text-xl">Welcome to MobStarter</Text>
+        <Pressable
+          onPress={() => router.push("/login")}
+          className="bg-primary w-fit flex-row gap-x-2 items-center justify-center absolute bottom-11 text-primary p-3 px-8 pb-3.5 rounded-[120px] mt-3"
+        >
+          <Text className="text-white text-lg font-bold">Get Started</Text>
+          <AntDesign name="arrowright" size={24} color={Colors["dark"].text} />
+        </Pressable>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default IndexPage;
