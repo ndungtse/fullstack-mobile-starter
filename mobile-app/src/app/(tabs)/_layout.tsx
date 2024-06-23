@@ -16,7 +16,7 @@ export default function TabLayout() {
   const _tabBarStyle = isIos ? styles.tabBarIos : styles.tabBarAndroid;
   return (
     <SafeAreaProvider style={{ backgroundColor: Colors[colorScheme].color }}>
-      <CustomStatusBar />
+      {/* <CustomStatusBar /> */}
       <Tabs
 
         screenOptions={{
@@ -51,6 +51,15 @@ export default function TabLayout() {
             tabBarIcon: ({ color, focused }) => (
               <TabBarIcon focused={focused}>
                 <MaterialIcons name="notifications" size={35} color={color} />
+              </TabBarIcon>
+            ),
+          }} />
+        <Tabs.Screen
+          name="users"
+          options={{
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarIcon focused={focused}>
+                <MaterialIcons name="group" size={35} color={color} />
               </TabBarIcon>
             ),
           }} />

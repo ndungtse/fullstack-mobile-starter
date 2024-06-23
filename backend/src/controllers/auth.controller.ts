@@ -15,8 +15,10 @@ AuthRouter.post("/register", async (req, res) => {
   try {
     await registerSchema.parseAsync(req.body);
     const { email, password, fullName } = req.body;
-    // if (!email || !password || !fullName)
-    //   return res.status(400).json({ message: "Please fill all fields" });
+    const userExists = await prisma.user.findFirst({ where: { email } });
+    if (userExists) {
+      throw new Error("User with the email exists");
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
       data: {

@@ -1,9 +1,10 @@
 import CustomInput from '@/components/core/inputs/CustomInput';
-import { api } from '@/utils/fetch';
+import { api, getResError } from '@/utils/fetch';
 import { Feather } from '@expo/vector-icons';
 import { Link, router } from 'expo-router';
 import React from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Toast } from 'react-native-toast-notifications';
 
 const RegisterScreen = () => {
     const [data, setData] = React.useState({
@@ -26,13 +27,18 @@ const RegisterScreen = () => {
             const res = await api.post('/auth/register', data)
             console.log(res.data)
             setError('')
+            Toast.show("Registered Successfully", { type: "success" })
             router.push('/login')
         } catch (error) {
             console.log(error)
+            Toast.show(getResError(error), { type: "danger" })
         }
         setLoading(false)
     }
 
+    const onChange = (name: keyof typeof data, value: string) => {
+        setData({ ...data, [name]: value });
+    };
 
     return (
 
@@ -46,22 +52,32 @@ const RegisterScreen = () => {
                 <ScrollView className='flex-1 px-3'>
                     <Text className='font-bold mt-1 opacity-50 text-sm text-center'>Please fill in the information</Text>
                     {error ? <Text className='text-red-500 text-sm text-center'>{error}</Text> : null}
-                    <CustomInput leftSection={<Feather name="user" size={28} color="gray" />}
-                        onChange={(text) => setData({ ...data, fullName: text })}
-                        placeholder='Your Full Names'
+                    <CustomInput
+                        leftSection={<Feather name="user" size={28} color="gray" />}
+                        onChange={(text) => onChange("fullName", text)}
+                        placeholder="Your Full Names"
                     />
-                    <CustomInput className='mt-4' leftSection={<Feather name="phone" size={28} color="gray" />}
-                        placeholder='Your Phone Number'
-                        keyboardType='phone-pad'
+                    <CustomInput
+                        className="mt-4"
+                        leftSection={<Feather name="phone" size={28} color="gray" />}
+                        onChange={(text) => onChange("phoneNumber", text)}
+                        placeholder="Your Phone Number"
+                        keyboardType="phone-pad"
                     />
-                    <CustomInput leftSection={<Feather name="mail" size={28} color="gray" />}
-                        placeholder='Your Email'
-                        className='mt-4'
-                        keyboardType='email-address' />
-                    <CustomInput onChange={(text) => setData({ ...data, password: text })}
+                    <CustomInput
+                        leftSection={<Feather name="mail" size={28} color="gray" />}
+                        onChange={(text) => onChange("email", text)}
+                        placeholder="Your Email"
+                        className="mt-4"
+                        keyboardType="email-address"
+                    />
+                    <CustomInput
+                        onChange={(text) => onChange("password", text)}
                         type="password"
-                        className='mt-5'
-                        placeholder='Your Password' leftSection={<Feather name="lock" size={28} color="gray" />}
+                        className="mt-5"
+                        placeholder="Your Password"
+                        secureTextEntry
+                        leftSection={<Feather name="lock" size={28} color="gray" />}
                     />
                     <Pressable
                         onPress={onRegister}

@@ -1,5 +1,4 @@
 import CustomInput from '@/components/core/inputs/CustomInput';
-import TextField from '@/components/core/inputs/TextField';
 import { useAuth } from '@/contexts/AuthProvider';
 import useStorage from '@/hooks/useStorage';
 import { api, getResError } from '@/utils/fetch';
@@ -7,6 +6,7 @@ import { AntDesign, Feather, FontAwesome } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
+import { useToast } from 'react-native-toast-notifications';
 
 const LoginScreen = () => {
   const [data, setData] = React.useState({
@@ -18,6 +18,7 @@ const LoginScreen = () => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState('');
   const router = useRouter()
+  const toast = useToast();
 
   const onLogin = async () => {
     setLoading(true)
@@ -27,21 +28,24 @@ const LoginScreen = () => {
       return
     }
     try {
-      /* Uncomment below to make a call request, also user */
-      // const res = await api.post('/auth/login', data)
-      // console.log(res.data)
-      // const res_data = res.data.data
-      // const token =res_data.token
-      const token ='res_data.token'
+      const res = await api.post('/auth/login', data)
+      console.log(res.data)
+      const res_data = res.data.data
+      const token = res_data.token
+      // const token = 'res_data.token'
       storeData('token', token)
       setToken(token)
-      // setUser(res_data.user)
+      setUser(res_data.user)
       setError('')
+      toast.show("Login Successfully", { type: 'success' })
       router.push('/(tabs)')
     } catch (error) {
       const err = getResError(error)
       setError(err)
-      console.log(err)
+      toast.show(err, {
+        type: 'danger'
+      })
+      console.log(error)
     }
     setLoading(false)
   }
@@ -64,6 +68,7 @@ const LoginScreen = () => {
             onChange={(text) => setData({ ...data, email: text })} />
           <CustomInput onChange={(text) => setData({ ...data, password: text })}
             type="password"
+            secureTextEntry
             className='mt-5'
             placeholder='Your Password' leftSection={<Feather name="lock" size={28} color="gray" />}
           />

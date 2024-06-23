@@ -4,10 +4,6 @@ import {
   useColorScheme as useNativeColorScheme,
 } from "react-native";
 
-interface Opts {
-  defaultValue?: ColorSchemeName;
-}
-
 export const useColorScheme = (defaultValue?: ColorSchemeName) => {
   const [colorScheme, setColorScheme] = useState<ColorSchemeName>(
     defaultValue ?? useNativeColorScheme() ?? "light"

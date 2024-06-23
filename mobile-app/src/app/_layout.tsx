@@ -6,12 +6,13 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import "./style.css";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { NativeWindStyleSheet } from 'nativewind';
 import AppSplashScreen from '@/components/shared/AppSplashScreen';
 import AppProvider from '@/contexts/AppProvider';
 import { AuthProvider } from '@/contexts/AuthProvider';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { NativeWindStyleSheet } from 'nativewind';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ToastProvider } from 'react-native-toast-notifications';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -38,23 +39,25 @@ export default function RootLayout() {
   }
 
   return (
-    <AuthProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <AppProvider>
-          <SafeAreaView
-            style={{
-              flex: 1,
-              // backgroundColor: colorScheme === 'dark' ? DarkTheme.colors.background : DefaultTheme.colors.background,
-            }}
-            edges={[]}
-          >
-            <Stack screenOptions={{ headerShown: false }} initialRouteName='index'>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="+not-found" />
-            </Stack>
-          </SafeAreaView>
-        </AppProvider>
-      </ThemeProvider>
-    </AuthProvider>
+    <ToastProvider placement='top'>
+      <AuthProvider>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <AppProvider>
+            <SafeAreaView
+              style={{
+                flex: 1,
+                // backgroundColor: colorScheme === 'dark' ? DarkTheme.colors.background : DefaultTheme.colors.background,
+              }}
+              edges={[]}
+            >
+              <Stack screenOptions={{ headerShown: false }} initialRouteName='index'>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </SafeAreaView>
+          </AppProvider>
+        </ThemeProvider>
+      </AuthProvider>
+    </ToastProvider>
   );
 }

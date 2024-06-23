@@ -1,8 +1,8 @@
-import React from 'react'
-import useColorScheme from '@/hooks/useColorScheme'
+import useColorScheme from '@/hooks/useColorScheme';
+import { theme } from '@/utils/constants/Colors';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
-import { ColorSchemeName } from 'react-native';
+import React from 'react';
 
 const AppContext = React.createContext({
   colorScheme: 'light' as "light" | "dark",
@@ -17,8 +17,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const _colorScheme = colorScheme as "light" | "dark"
   return (
-    <AppContext.Provider value={{ colorScheme: _colorScheme , setColorScheme, toggleColorScheme }}>
-      <ApplicationProvider {...eva} theme={eva[colorScheme!]}>
+    <AppContext.Provider value={{ colorScheme: _colorScheme, setColorScheme, toggleColorScheme }}>
+      <ApplicationProvider {...eva} theme={{ ...eva[colorScheme!], ...theme }}>
         {children}
       </ApplicationProvider>
     </AppContext.Provider>
