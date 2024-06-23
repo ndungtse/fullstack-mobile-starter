@@ -42,7 +42,7 @@ const RegisterScreen = () => {
 
     return (
 
-        <View className=' bg-primary flex-1 pt-20'>
+        <View className=' bg-white flex-1 pt-48'>
             <View className=' bg-white rounded-t-[30px] flex-1'>
                 <View className='flex flex-row mt-6 items-center justify-center'>
                     <Text className=' text-4xl font-bold'>Mob</Text>
